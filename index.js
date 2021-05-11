@@ -117,11 +117,10 @@ document.addEventListener('DOMContentLoaded', function () {
         const avatarInput = document.querySelector("#edit-avatar").value
         
         console.log(userData)
-        const editedUser = document.querySelector(`#user-${userData.id}`)
-        // const editedUser = document.querySelector(`#user-${e.target.dataset.id}`)
+        const editedUser = document.querySelector(`#edit-user-${userData.id}`)
         console.log(editedUser)
         
-        fetch(`${userUrl}/{userData.id}`, {
+        fetch(`${userUrl}/${userData.id}`, {
           method: 'PATCH',
           body: JSON.stringify({
             name: nameInput,
@@ -152,6 +151,7 @@ document.addEventListener('DOMContentLoaded', function () {
           <div id=edit-user-${user.id}>
           </div>`
             editForm.innerHTML = ""
+            window.location.reload(); // refresh the page after the edit is made.
           })
       }) // end of this event listener for edit submit
 

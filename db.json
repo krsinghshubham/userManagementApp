@@ -2,15 +2,15 @@
   "users": [
     {
       "id": "607d363fb5cd1ce55e099113",
-      "is_active": true,
-      "name": "Garrett Peters",
-      "email": "garrettpeters@filodyne.com",
-      "phone": "+91-8024202071",
-      "address": "183 Fleet Street, Stouchsburg, Tennessee, 4949",
+      "is_active": "true",
+      "name": "Priya",
+      "email": "sm6143@srmist.edu.in",
+      "phone": "+919576024837",
+      "address": "urapakaam st-2, chennai",
       "created_at": "2016-07-29 06:45:15 AM",
       "updated_at": "4-5-2021 20:48:28",
       "role": "GUEST",
-      "avatar": "https://randomuser.me/api/portraits/men/81.jpg"
+      "avatar": "https://randomuser.me/api/portraits/women/23.jpg"
     },
     {
       "id": "607d363f129270a47a82f0b5",
