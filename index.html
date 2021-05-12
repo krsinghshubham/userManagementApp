@@ -3,11 +3,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <script src="https://kit.fontawesome.com/2330abd0df.js" crossorigin="anonymous"></script>   
     <title>User Management</title>
   </head>
 
   <body>
     <h1>Users</h1>
+    <br>
     <div id='create-user'>
       <form id="user-form">
         <input id="name" placeholder="name...">
@@ -19,6 +22,16 @@
         <input id="avatar" placeholder="avatar address">
         <input type="submit" value="Add User">
     </div>
+    <br>
+    <div class="form-group">
+      <input 
+        type="text"
+        id="search" 
+        class="form-control form-control-ig" 
+        placeholder="search by keyword..."
+      />
+    </div>
+    <div id="match-list"></div>
     <div id='user-container'></div>
 
     <script src='index.js'></script>

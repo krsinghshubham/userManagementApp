@@ -1,12 +1,64 @@
 document.addEventListener('DOMContentLoaded', function () {
+      document.getElementById("user-container").disabled = true;
 
-  // RFetching users, Read(R) operation.
   const userContainer = document.querySelector('#user-container')
   const userUrl = `http://localhost:3000/users`
   const userForm = document.querySelector('#user-form')
   let allUsers = []
 
+  const search = document.getElementById('search');
+  const matchList = document.getElementById('match-list');
+  // var searchTextIsNotEmpty=0
+  // Search db.json and filter it
+  const searchUsers = async searchText => {
+    document.getElementById("user-container").disabled = true;
 
+    const res = await fetch(`${userUrl}`);
+    const users = await res.json();
+    // get matches to current user input
+    let matches = users.filter(user => {
+      const regex = new RegExp(`^${searchText}`, 'gi'); //gi as global incaseSensitive
+      return user.id.match(regex) || user.email.match(regex);
+    });
+    if (searchText.length === 0) {
+      matches = [];
+      matchList.innerHTML = '';
+      // searchTextIsNotEmpty==1
+    }
+    // show results in Html.
+    outputHtml(matches);
+  };
+  const outputHtml = (matches) => {
+    if (matches.length > 0) {
+      // searchTextIsNotEmpty=1
+      const htmlString = matches.map((matches) => {
+        return `
+      <div id=${matches.id}>
+          <h2>${matches.name}</h2>
+        <img src="${matches.avatar}" width="333" height="500" >
+        <h2>${matches.is_active}</h2>
+        <h2>${matches.name}</h2>
+        <h2>${matches.email}</h2>
+        <p>>${matches.address}</p>
+        <h2>${matches.phone}</h2>
+        <h2>${matches.role}</h2>
+
+        <button data-id="${matches.id}" id="edit-${matches.id}" data-action="edit">Edit</button>
+        <button data-id="${matches.id}" id="delete-${matches.id}" data-action="delete">Delete</button>
+      </div>
+      <div id=edit-user-${matches.id}>
+      </div>
+      `;
+      }
+      ).join('');
+      matchList.innerHTML = htmlString;
+    };
+  };
+
+  search.addEventListener('input', () => searchUsers(search.value));
+
+  // RFetching users, Read(R) operation.
+  // if(searchTextIsNotEmpty===0){
   fetch(`${userUrl}`)
     .then(response => response.json())
     .then(userData => userData.forEach(function (user) {
@@ -27,7 +79,9 @@ document.addEventListener('DOMContentLoaded', function () {
       </div>
       <div id=edit-user-${user.id}>
       </div>`
+
     })) // end of users fetch
+  // }
 
   // Adding user, Create(C) operation.
   userForm.addEventListener('submit', (e) => {
@@ -115,11 +169,11 @@ document.addEventListener('DOMContentLoaded', function () {
         const is_activeInput = document.querySelector("#edit-is_active").value
         const roleInput = document.querySelector("#edit-role").value
         const avatarInput = document.querySelector("#edit-avatar").value
-        
+
         console.log(userData)
         const editedUser = document.querySelector(`#edit-user-${userData.id}`)
         console.log(editedUser)
-        
+
         fetch(`${userUrl}/${userData.id}`, {
           method: 'PATCH',
           body: JSON.stringify({
