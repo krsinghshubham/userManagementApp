@@ -1,87 +1,68 @@
 document.addEventListener('DOMContentLoaded', function () {
-      document.getElementById("user-container").disabled = true;
+  //  document.getElementById("user-container").disabled = true;
 
   const userContainer = document.querySelector('#user-container')
+  const searchBar = document.getElementById('searchBar');
+  let typedCharacters = [];
+
   const userUrl = `http://localhost:3000/users`
+  // fetch(`${userUrl}`, {
+    
+  // })
+
   const userForm = document.querySelector('#user-form')
   let allUsers = []
 
-  const search = document.getElementById('search');
-  const matchList = document.getElementById('match-list');
-  // var searchTextIsNotEmpty=0
-  // Search db.json and filter it
-  const searchUsers = async searchText => {
-    document.getElementById("user-container").disabled = true;
+  searchBar.addEventListener('keyup', (e) => {
+    const searchString = e.target.value.toLowerCase();
 
-    const res = await fetch(`${userUrl}`);
-    const users = await res.json();
-    // get matches to current user input
-    let matches = users.filter(user => {
-      const regex = new RegExp(`^${searchText}`, 'gi'); //gi as global incaseSensitive
-      return user.id.match(regex) || user.email.match(regex);
-    });
-    if (searchText.length === 0) {
-      matches = [];
-      matchList.innerHTML = '';
-      // searchTextIsNotEmpty==1
+    const filteredCharacters = typedCharacters.filter((character) => {
+      return (
+        character.name.toLowerCase().includes(searchString) ||
+        character.email.toLowerCase().includes(searchString) ||
+        character.phone.toLowerCase().includes(searchString)
+      );
+    })
+    displayUsers(filteredCharacters)
+  })
+
+  const loadCharacters = async () => {
+    try {
+      const res = await fetch(`${userUrl}`);
+      typedCharacters = await res.json();
+      displayUsers(typedCharacters);
+      allUsers=typedCharacters
+    } catch (err) {
+      console.error(err);
     }
-    // show results in Html.
-    outputHtml(matches);
   };
-  const outputHtml = (matches) => {
-    if (matches.length > 0) {
-      // searchTextIsNotEmpty=1
-      const htmlString = matches.map((matches) => {
+  const displayUsers = (users) => {
+    const htmlString = users
+      .map((user) => {
         return `
-      <div id=${matches.id}>
-          <h2>${matches.name}</h2>
-        <img src="${matches.avatar}" width="333" height="500" >
-        <h2>${matches.is_active}</h2>
-        <h2>${matches.name}</h2>
-        <h2>${matches.email}</h2>
-        <p>>${matches.address}</p>
-        <h2>${matches.phone}</h2>
-        <h2>${matches.role}</h2>
-
-        <button data-id="${matches.id}" id="edit-${matches.id}" data-action="edit">Edit</button>
-        <button data-id="${matches.id}" id="delete-${matches.id}" data-action="delete">Delete</button>
-      </div>
-      <div id=edit-user-${matches.id}>
-      </div>
-      `;
-      }
-      ).join('');
-      matchList.innerHTML = htmlString;
-    };
+          <li class="user">
+            <div id=${user.id}>
+              <img src="${user.avatar}" width="333" height="500" >
+              <h5>${user.is_active}</h5>
+              <h5>${user.name}</h5>
+              <h5>${user.email}</h5>
+              <h5>${user.address}</h5>
+              <h5>${user.phone}</h5>
+              <h5>${user.role}</h5>
+      
+              <button data-id="${user.id}" id="edit-${user.id}" data-action="edit">Edit</button>
+              <button data-id="${user.id}" id="delete-${user.id}" data-action="delete">Delete</button>
+            </div>
+            <div id=edit-user-${user.id}>
+            </div>
+          </li>`
+      })
+      .join('');
+    userContainer.innerHTML = htmlString;
   };
 
-  search.addEventListener('input', () => searchUsers(search.value));
-
-  // RFetching users, Read(R) operation.
-  // if(searchTextIsNotEmpty===0){
-  fetch(`${userUrl}`)
-    .then(response => response.json())
-    .then(userData => userData.forEach(function (user) {
-      allUsers = userData
-      userContainer.innerHTML += `
-
-      <div id=${user.id}>
-        <img src="${user.avatar}" width="333" height="500" >
-        <h2>${user.is_active}</h2>
-        <h2>${user.name}</h2>
-        <h2>${user.email}</h2>
-        <p>>${user.address}</p>
-        <h2>${user.phone}</h2>
-        <h2>${user.role}</h2>
-
-        <button data-id="${user.id}" id="edit-${user.id}" data-action="edit">Edit</button>
-        <button data-id="${user.id}" id="delete-${user.id}" data-action="delete">Delete</button>
-      </div>
-      <div id=edit-user-${user.id}>
-      </div>`
-
-    })) // end of users fetch
-  // }
+  loadCharacters();
+  // -------------------------------------------------------------------------------------------------
 
   // Adding user, Create(C) operation.
   userForm.addEventListener('submit', (e) => {
@@ -132,6 +113,7 @@ document.addEventListener('DOMContentLoaded', function () {
       })
 
   }) // end of addEventListener for adding a user
+  // -------------------------------------------------------------------------------------
 
   // Editing user, Update(U) operation.
   userContainer.addEventListener('click', (e) => {
@@ -139,6 +121,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       const editButton = document.querySelector(`#edit-${e.target.dataset.id}`)
       editButton.disabled = true
+      console.log(allUsers)
 
       const userData = allUsers.find((user) => {
         return user.id == e.target.dataset.id
@@ -208,6 +191,7 @@ document.addEventListener('DOMContentLoaded', function () {
             window.location.reload(); // refresh the page after the edit is made.
           })
       }) // end of this event listener for edit submit
+      // -------------------------------------------------------------------------------------
 
       // Deleting user, Delete() operation
     } else if (e.target.dataset.action === 'delete') {
@@ -221,6 +205,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
   })  // end of eventListener for editing and deleting a User
+  // -------------------------------------------------------------------------------------
 
 })
 
