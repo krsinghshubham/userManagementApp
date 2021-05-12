@@ -20,8 +20,8 @@ h1 {
 
 #user-container {
     padding-inline-start: 0;
-     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
     grid-gap: 20px;
     justify-content: center;
     align-self: center; 
@@ -60,9 +60,24 @@ h1 {
     max-height: 100px;
     grid-area: image;
 }
+img {
+    border-radius: 50%;
+  }
+  .avatar {
+    vertical-align: middle;
+    width: 350px;
+    height: 350px;
+    margin: 10px;
+    border:10px solid red;
+    border-radius: 500px;
+    -webkit-border-radius: 500px;
+    -moz-border-radius: 500px;
+
+  }
+  
 
 #searchBar {
-    width: 100%;
+    width: 500%;
     height: 32px;
     border-radius: 3px;
     border: 1px solid #eaeaea;

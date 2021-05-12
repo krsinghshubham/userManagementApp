@@ -6,16 +6,17 @@ document.addEventListener('DOMContentLoaded', function () {
   let typedCharacters = [];
 
   const userUrl = `http://localhost:3000/users`
+  
   // fetch(`${userUrl}`, {
     
   // })
 
   const userForm = document.querySelector('#user-form')
   let allUsers = []
-
+  
   searchBar.addEventListener('keyup', (e) => {
     const searchString = e.target.value.toLowerCase();
-
+  
     const filteredCharacters = typedCharacters.filter((character) => {
       return (
         character.name.toLowerCase().includes(searchString) ||
@@ -36,13 +37,15 @@ document.addEventListener('DOMContentLoaded', function () {
       console.error(err);
     }
   };
+  
   const displayUsers = (users) => {
     const htmlString = users
       .map((user) => {
         return `
           <li class="user">
             <div id=${user.id}>
-              <img src="${user.avatar}" width="333" height="500" >
+
+              <img id="imgId" src="${user.avatar}" alt="Avatar" class="avatar">
               <h5>${user.is_active}</h5>
               <h5>${user.name}</h5>
               <h5>${user.email}</h5>
@@ -59,6 +62,10 @@ document.addEventListener('DOMContentLoaded', function () {
       })
       .join('');
     userContainer.innerHTML = htmlString;
+    // console.log(users.id)
+      
+      document.querySelector('.avatar').style.border= '10px solid blue';
+
   };
 
   loadCharacters();
