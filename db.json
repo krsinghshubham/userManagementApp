@@ -2,7 +2,6 @@
   "users": [
     {
       "id": "607d363fb5cd1ce55e099113",
-      "is_active": "true",
       "name": "Priyanka",
       "email": "priyankasm33@srmist.edu.in",
       "phone": "+919576024837",
@@ -10,6 +9,7 @@
       "created_at": "2016-07-29 06:45:15 AM",
       "updated_at": "4-5-2021 20:48:28",
       "role": "GUEST",
+      "is_active": true,
       "avatar": "https://randomuser.me/api/portraits/women/3.jpg"
     },
     {
@@ -1197,26 +1197,6 @@
       "updated_at": "2017-03-04 02:31:25 AM",
       "role": "MEMBER",
       "avatar": "https://randomuser.me/api/portraits/women/99.jpg"
-    },
-    {
-      "name": "SHUBHAM KUMAR SINGH",
-      "email": "Shubhamk604@gmail.com",
-      "phone": "+918210427935",
-      "address": "c/o: Baban Singh, Tripati kunj, rajendra nagar, Karman Tola",
-      "is_active": "true",
-      "role": "MEMBER",
-      "avatar": "https://randomuser.me/api/portraits/men/90.jpg",
-      "id": "zEYnUbR"
-    },
-    {
-      "name": "Priya",
-      "email": "priya.cs@gmail.com",
-      "phone": "03838384838",
-      "address": "c/o: Baban Singh, Tripati kunj, rajendra nagar, Karman Tola",
-      "is_active": "false",
-      "role": "GUEST",
-      "avatar": "https://randomuser.me/api/portraits/women/23.jpg",
-      "id": "2LaKD8a"
     }
   ]
 }

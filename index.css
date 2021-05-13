@@ -13,15 +13,17 @@ h1 {
 }
 .container {
     padding: 40px;
-    margin: 0 auto;
+    margin:  auto;
     max-width: 1000px;
     text-align: center;
 }
-
+#user-form{
+    max-width: 200%;
+}
 #user-container {
     padding-inline-start: 0;
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     grid-gap: 20px;
     justify-content: center;
     align-self: center; 
@@ -70,6 +72,7 @@ img {
     margin: 10px;
     border:10px solid red;
     border-radius: 500px;
+    border-width: 50cm;
     -webkit-border-radius: 500px;
     -moz-border-radius: 500px;
 
@@ -77,21 +80,12 @@ img {
   
 
 #searchBar {
-    width: 500%;
+    margin-top: 10px;
+    width: 95%;
     height: 32px;
     border-radius: 3px;
     border: 1px solid #eaeaea;
-    padding: 5px 10px;
+    padding: 5px 1%;
     font-size: 12px;
 }
 
-#searchWrapper {
-    position: relative;
-}
-
-#searchWrapper::after {
-    content: '🔍';
-    position: absolute;
-    top: 7px;
-    right: 15px;
-}
