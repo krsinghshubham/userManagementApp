@@ -6,17 +6,17 @@ document.addEventListener('DOMContentLoaded', function () {
   let typedCharacters = [];
 
   const userUrl = `http://localhost:3000/users`
-  
+
   // fetch(`${userUrl}`, {
-    
+
   // })
 
   const userForm = document.querySelector('#user-form')
   let allUsers = []
-  
+
   searchBar.addEventListener('keyup', (e) => {
     const searchString = e.target.value.toLowerCase();
-  
+
     const filteredCharacters = typedCharacters.filter((character) => {
       return (
         character.name.toLowerCase().includes(searchString) ||
@@ -32,12 +32,12 @@ document.addEventListener('DOMContentLoaded', function () {
       const res = await fetch(`${userUrl}`);
       typedCharacters = await res.json();
       displayUsers(typedCharacters);
-      allUsers=typedCharacters
+      allUsers = typedCharacters
     } catch (err) {
       console.error(err);
     }
   };
-  
+
   const displayUsers = (users) => {
     const htmlString = users
       .map((user) => {
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
           <li class="user">
             <div id=${user.id}>
 
-              <img id="imgId" src="${user.avatar}" alt="Avatar" class="avatar">
+              <img class="avatar" src="${user.avatar}" alt="Avatar" >
               <h5>${user.is_active}</h5>
               <h5>${user.name}</h5>
               <h5>${user.email}</h5>
@@ -61,49 +61,90 @@ document.addEventListener('DOMContentLoaded', function () {
           </li>`
       })
       .join('');
+
     userContainer.innerHTML = htmlString;
-    // console.log(users.id)
-      
-      document.querySelector('.avatar').style.border= '10px solid blue';
+    // console.log(user.is_active)
 
-  };
+    var div_list = document.querySelectorAll('.avatar') // querySelectorAll returns a Nodelist object which is similar to an array but NOT an array
+    var div_array = [...div_list];
+    console.log(users)
 
-  loadCharacters();
-  // -------------------------------------------------------------------------------------------------
-
-  // Adding user, Create(C) operation.
-  userForm.addEventListener('submit', (e) => {
-    e.preventDefault(); // to make list get refreshed automatically after addition with new user.
-
-    console.log(e.target)
-
-    const nameInput = userForm.querySelector('#name').value
-    const emailInput = userForm.querySelector('#email').value
-    const phoneInput = userForm.querySelector('#phone').value
-    const addressInput = userForm.querySelector('#address').value
-    const is_activeInput = userForm.querySelector('#is_active').value
-    const roleInput = userForm.querySelector('#role').value
-    const avatarInput = userForm.querySelector('#avatar').value
-
-
-
-    fetch(`${userUrl}`, {
-      method: 'POST',
-      body: JSON.stringify({
-        name: nameInput,
-        email: emailInput,
-        phone: phoneInput,
-        address: addressInput,
-        is_active: is_activeInput,
-        role: roleInput,
-        avatar: avatarInput
-      }),
-      headers: { // this is necessary to make the fetch api work. (https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch#Headers)
-        'Content-Type': 'application/json'
+    div_array.forEach( (div,index) => {
+      // console.log(index)
+      if (users[index].is_active === true) {
+        div.style.border = '10px solid green';
       }
-    }).then(response => response.json())
-      .then(user => {
-        userContainer.innerHTML += `
+      else {
+        div.style.border = '10px solid blue';
+
+      }
+    });
+    function myFunction(item, index) {
+      // document.getElementById("demo").innerHTML += index + ":" + item + "<br>";
+    }
+    
+      // for (var i in users) 
+      // {
+      //   if((users[i].is_active)==true){
+      //     console.log(users[i].name)
+      //     console.log('green')
+      //     console.log(users[i].is_active)
+      //     console.log("")
+      //     // document.querySelector('.avatar').style.border = '10px solid green';
+      //     document.getElementsByClassName('avatar').style.border = '10px solid green';
+      //   }
+      //   else
+      //   {
+      //     // div.style.border = '10px solid blue';
+      //     // document.getElementsByClassName(users[i].id).style.border = '10px solid blue';
+      //     console.log(users[i].name)
+      //     console.log('blue')
+      //     console.log(users[i].is_active)
+      //     document.querySelector('.avatar').style.border = '10px solid blue';
+      //     console.log("")
+
+
+      //   }
+      // }
+    }
+
+
+loadCharacters();
+// -------------------------------------------------------------------------------------------------
+
+// Adding user, Create(C) operation.
+userForm.addEventListener('submit', (e) => {
+  e.preventDefault(); // to make list get refreshed automatically after addition with new user.
+
+  console.log(e.target)
+
+  const nameInput = userForm.querySelector('#name').value
+  const emailInput = userForm.querySelector('#email').value
+  const phoneInput = userForm.querySelector('#phone').value
+  const addressInput = userForm.querySelector('#address').value
+  const is_activeInput = userForm.querySelector('#is_active').value
+  const roleInput = userForm.querySelector('#role').value
+  const avatarInput = userForm.querySelector('#avatar').value
+
+
+
+  fetch(`${userUrl}`, {
+    method: 'POST',
+    body: JSON.stringify({
+      name: nameInput,
+      email: emailInput,
+      phone: phoneInput,
+      address: addressInput,
+      is_active: is_activeInput,
+      role: roleInput,
+      avatar: avatarInput
+    }),
+    headers: { // this is necessary to make the fetch api work. (https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch#Headers)
+      'Content-Type': 'application/json'
+    }
+  }).then(response => response.json())
+    .then(user => {
+      userContainer.innerHTML += `
           <div id=${user.id}>
             <img src="${user.avatar}" width="333" height="500" >
             <h2>${user.is_active}</h2>
@@ -117,24 +158,24 @@ document.addEventListener('DOMContentLoaded', function () {
           </div>
           <div id=edit-user-${user.id}>
           </div>`
-      })
+    })
 
-  }) // end of addEventListener for adding a user
-  // -------------------------------------------------------------------------------------
+}) // end of addEventListener for adding a user
+// -------------------------------------------------------------------------------------
 
-  // Editing user, Update(U) operation.
-  userContainer.addEventListener('click', (e) => {
-    if (e.target.dataset.action === 'edit') {
+// Editing user, Update(U) operation.
+userContainer.addEventListener('click', (e) => {
+  if (e.target.dataset.action === 'edit') {
 
-      const editButton = document.querySelector(`#edit-${e.target.dataset.id}`)
-      editButton.disabled = true
-      console.log(allUsers)
+    const editButton = document.querySelector(`#edit-${e.target.dataset.id}`)
+    editButton.disabled = true
+    console.log(allUsers)
 
-      const userData = allUsers.find((user) => {
-        return user.id == e.target.dataset.id
-      })
-      const editForm = userContainer.querySelector(`#edit-user-${e.target.dataset.id}`)
-      editForm.innerHTML = `
+    const userData = allUsers.find((user) => {
+      return user.id == e.target.dataset.id
+    })
+    const editForm = userContainer.querySelector(`#edit-user-${e.target.dataset.id}`)
+    editForm.innerHTML = `
         <form class='form' id='edit-user' action ='index.html' method='post'>
           <form id ="user-form">
               <input id="edit-name" placeholder="${userData.name}">
@@ -148,39 +189,39 @@ document.addEventListener('DOMContentLoaded', function () {
           </form>
         </form>`
 
-      editForm.addEventListener("submit", (e) => {
-        e.preventDefault()
+    editForm.addEventListener("submit", (e) => {
+      e.preventDefault()
 
-        const nameInput = document.querySelector("#edit-name").value
-        const emailInput = editForm.querySelector("#edit-email").value
-        const phoneInput = document.querySelector("#edit-phone").value
+      const nameInput = document.querySelector("#edit-name").value
+      const emailInput = editForm.querySelector("#edit-email").value
+      const phoneInput = document.querySelector("#edit-phone").value
 
-        const addressInput = document.querySelector("#edit-address").value
-        const is_activeInput = document.querySelector("#edit-is_active").value
-        const roleInput = document.querySelector("#edit-role").value
-        const avatarInput = document.querySelector("#edit-avatar").value
+      const addressInput = document.querySelector("#edit-address").value
+      const is_activeInput = document.querySelector("#edit-is_active").value
+      const roleInput = document.querySelector("#edit-role").value
+      const avatarInput = document.querySelector("#edit-avatar").value
 
-        console.log(userData)
-        const editedUser = document.querySelector(`#edit-user-${userData.id}`)
-        console.log(editedUser)
+      console.log(userData)
+      const editedUser = document.querySelector(`#edit-user-${userData.id}`)
+      console.log(editedUser)
 
-        fetch(`${userUrl}/${userData.id}`, {
-          method: 'PATCH',
-          body: JSON.stringify({
-            name: nameInput,
-            email: emailInput,
-            phone: phoneInput,
-            address: addressInput,
-            is_active: is_activeInput,
-            role: roleInput,
-            avatar: avatarInput
-          }),
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }).then(response => response.json())
-          .then(user => {
-            editedUser.innerHTML = `
+      fetch(`${userUrl}/${userData.id}`, {
+        method: 'PATCH',
+        body: JSON.stringify({
+          name: nameInput,
+          email: emailInput,
+          phone: phoneInput,
+          address: addressInput,
+          is_active: is_activeInput,
+          role: roleInput,
+          avatar: avatarInput
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then(response => response.json())
+        .then(user => {
+          editedUser.innerHTML = `
           <div id=${user.id}>
             <img src="${user.avatar}" width="333" height="500" >
             <h2>${user.is_active}</h2>
@@ -194,24 +235,24 @@ document.addEventListener('DOMContentLoaded', function () {
           </div>
           <div id=edit-user-${user.id}>
           </div>`
-            editForm.innerHTML = ""
-            window.location.reload(); // refresh the page after the edit is made.
-          })
-      }) // end of this event listener for edit submit
-      // -------------------------------------------------------------------------------------
+          editForm.innerHTML = ""
+          window.location.reload(); // refresh the page after the edit is made.
+        })
+    }) // end of this event listener for edit submit
+    // -------------------------------------------------------------------------------------
 
-      // Deleting user, Delete() operation
-    } else if (e.target.dataset.action === 'delete') {
-      document.querySelector(`#user-${e.target.dataset.id}`)
-      fetch(`${userUrl}/${e.target.dataset.id}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }).then(response => response.json())
-    }
+    // Deleting user, Delete() operation
+  } else if (e.target.dataset.action === 'delete') {
+    document.querySelector(`#user-${e.target.dataset.id}`)
+    fetch(`${userUrl}/${e.target.dataset.id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(response => response.json())
+  }
 
-  })  // end of eventListener for editing and deleting a User
+})  // end of eventListener for editing and deleting a User
   // -------------------------------------------------------------------------------------
 
 })
