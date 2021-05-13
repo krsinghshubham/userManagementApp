@@ -13,7 +13,7 @@ h1 {
 }
 .container {
     padding: 40px;
-    margin:  auto;
+    margin: 0 auto;
     max-width: 1000px;
     text-align: center;
 }
@@ -70,7 +70,6 @@ img {
     margin: 10px;
     border:10px solid red;
     border-radius: 500px;
-    border-width: 50cm;
     -webkit-border-radius: 500px;
     -moz-border-radius: 500px;
 
