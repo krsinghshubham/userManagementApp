@@ -52,7 +52,7 @@ const displayUsers = (users) => {
               <h5>${user.role}</h5>
       
               <button data-id="${user.id}" id="edit-${user.id}" data-action="edit" class="btn  btn-small btn-dark">Edit</button>
-              <button data-id="${user.id}" id="delete-${user.id}" data-action="delete" type="button" class="btn  btn-small btn-danger" data-toggle="modal" data-target="#myModal">Delete</button>
+              <button data-id="${user.id}" id="delete-${user.id}" data-action="delete" type="button" class="btn  btn-small btn-danger" >Delete</button>
 
             </div>
             <div id=edit-user-${user.id}>
@@ -60,6 +60,7 @@ const displayUsers = (users) => {
           </li>`
     })
     .join('');
+  // <button data-id="${user.id}" id="delete-${user.id}" data-action="delete" type="button" class="btn  btn-small btn-danger" data-toggle="modal" data-target="#myModal">Delete</button>
 
   userContainer.innerHTML = htmlString;
 
@@ -69,14 +70,13 @@ const displayUsers = (users) => {
   div_array.forEach((div, index) => {
     // console.log(index)
     if (users[index].is_active === true) {
-      div.style.border = '10px solid green';
+      div.style.border = '10px solid rgb(108, 166, 111)';
     }
     else {
-      div.style.border = '10px solid blue';
+      div.style.border = '10px solid #581d38';
 
     }
   });
-
 
 
 }
@@ -206,61 +206,41 @@ userContainer.addEventListener('click', (e) => {
         })
     }) // end of this event listener for edit submit
     // -------------------------------------------------------------------------------------
-
+    
     // Deleting user, Delete() operation
   } else if (e.target.dataset.action === 'delete') {
-    console.log('else if also triggered')
-    deleteUser(e.target.dataset.id)
-    // target.id yaha se pass kar do ek function me., with fetch request of delete based on a boolean decided by modal
-    // and us function ko tabhi call karo jab modal ke andar se permission aaye.
 
-    // deleteUserSubmit()
-    // document.querySelector(`#user-${e.target.dataset.id}`)
-    // fetch(`${userUrl}/${e.target.dataset.id}`, {
-    //   method: 'DELETE',
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   }
-    // }).then(response => response.json())
+    // $('#myModal').on('show.bs.modal');
+    $('#myModal').modal('show')
+    $('#myModal .modal-footer button').on('click', function (event) {
+      var $button = $(event.target);
+
+      $(this).closest('.modal').one('hidden.bs.modal', function () {
+        console.log('now inside this function')
+        if ($button[0].id == "confirm-delete") {
+          console.log('delete button pressed')
+          deleteUser(e.target.dataset.id)
+        }
+        else {
+          console.log('cancel button pressed')
+        }
+        //  alert('The buttons id that closed the modal is: ' + $button[0].id) ;
+      });
+    });
 
   }
-
-
-
-
 })  // end of eventListener for editing and deleting a User
 
 // -------------------------------------------------------------------------------------
-let parameterPassedByModalListIsTrue = false;
 
 function deleteUser(targetDatasetId) {
-  setTimeout(() => {
-    console.log("waited for 8 secs");
 
-    if (parameterPassedByModalListIsTrue) {
-      document.querySelector(`#user-${targetDatasetId}`)
-      fetch(`${userUrl}/${targetDatasetId}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }).then(response => response.json())
-      console.log('parameterPassedByModalListIsTrue value is true and user deleted.')
-
-      parameterPassedByModalListIsTrue = false;
-
+  document.querySelector(`#user-${targetDatasetId}`)
+  fetch(`${userUrl}/${targetDatasetId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json'
     }
-    else {
-      console.log('parameterPassedByModalListIsTrue value is false.')
-    }
-  }, 5000);
+  }).then(response => response.json())
 
 }
-function deleteUserSubmit() {
-  console.log('delete function triggered.')
-  parameterPassedByModalListIsTrue = true;
-
-}
-// deleteUserSubmit()
-
-// })

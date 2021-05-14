@@ -48,12 +48,11 @@
         </div>
         <div class="modal-body">
           <h6> are you sure to delete ... <span id="deleteUserName"></span> <span id="deleteUserId"></span>
-            </h6>
+          </h6>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal"
-            onclick="closeModal('delete')">Close</button>
-          <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="deleteUserSubmit()">Submit</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" data-toggle="modal" id="Cancel" >Cancel</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal" data-toggle="modal" id="confirm-delete" >Delete</button>
         </div>
       </div>
 
@@ -62,7 +61,7 @@
 
   <!-- for displaying html -->
   <div id="parent-container">
-  <ul id='user-container'></ul>
+    <ul id='user-container'></ul>
   </div>
 
   <script src='index.js'></script>
