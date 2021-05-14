@@ -1,23 +1,11 @@
 {
   "users": [
     {
-      "id": "607d363fb5cd1ce55e099113",
-      "name": "Priyanka",
-      "email": "priyankasm33@srmist.edu.in",
-      "phone": "+919576024837",
-      "address": "urapakaam st-2, chennai",
-      "created_at": "2016-07-29 06:45:15 AM",
-      "updated_at": "4-5-2021 20:48:28",
-      "role": "GUEST",
-      "is_active": true,
-      "avatar": "https://randomuser.me/api/portraits/women/3.jpg"
-    },
-    {
       "id": "607d363f129270a47a82f0b5",
       "name": "Kaufman Bolton",
       "email": "kaufmanbolton@filodyne.com",
       "role": "MEMBER",
-      "is_active": true,
+      "is_active": false,
       "phone": "+91-8074832897",
       "address": "927 Fillmore Avenue, Crenshaw, New Jersey, 2840",
       "updated_at": "Last Sync: 4/5/2021 @ 19:49:23",
@@ -346,18 +334,6 @@
       "updated_at": "2015-08-06 05:43:53 PM",
       "role": "ADMIN",
       "avatar": "https://randomuser.me/api/portraits/women/28.jpg"
-    },
-    {
-      "id": "607d363ffc5a25c4bec68b52",
-      "is_active": false,
-      "name": "Stevenson Carr",
-      "email": "stevensoncarr@filodyne.com",
-      "phone": "+91-8915783761",
-      "address": "243 Dooley Street, Sussex, Pennsylvania, 9461",
-      "created_at": "2014-05-09 08:32:24 AM",
-      "updated_at": "2017-11-21 09:50:06 PM",
-      "role": "ADMIN",
-      "avatar": "https://randomuser.me/api/portraits/men/29.jpg"
     },
     {
       "id": "607d363f51fd268f7a31eb8f",
@@ -1197,6 +1173,26 @@
       "updated_at": "2017-03-04 02:31:25 AM",
       "role": "MEMBER",
       "avatar": "https://randomuser.me/api/portraits/women/99.jpg"
+    },
+    {
+      "name": "SHUBHAM KUMAR SINGH",
+      "email": "Shubhamk604@gmail.com",
+      "phone": "+918210427935",
+      "address": "c/o: Baban Singh, Tripati kunj, rajendra nagar, Karman Tola",
+      "is_active": true,
+      "role": "MEMBER",
+      "avatar": "https://randomuser.me/api/portraits/men/90.jpg",
+      "id": "zEYnUbR"
+    },
+    {
+      "name": "Priya",
+      "email": "priya.cs@gmail.com",
+      "phone": "03838384838",
+      "address": "c/o: Baban Singh, Tripati kunj, rajendra nagar, Karman Tola",
+      "is_active": false,
+      "role": "GUEST",
+      "avatar": "https://randomuser.me/api/portraits/women/23.jpg",
+      "id": "2LaKD8a"
     }
   ]
 }
