@@ -32,10 +32,38 @@
       </form>
     </div>
 
-    <div id="searchWrapper">
+    <div id="shortcuts">
       <input type="text" id="searchBar" name="searchBar" placeholder="search by name or email or phone"
         class="form-control form-control-ig" />
+    <!-- </div>
+    <!-- Filters -->
+      <!--<div id="Filters"> -->
+      <!-- for role filter  -->
+        <div class="dropdown">
+          <button class="btn btn-dark" type="button" data-toggle="dropdown">Status
+            <span class="caret"></span></button>
+          <ul class="dropdown-menu">
+            <input class="form-control" id="myInput" type="text" placeholder="Search..">
+            <li><a href="#">Any</a></li>
+            <li><a href="#">Active</a></li>
+            <li><a href="#">InActive</a></li>
+          </ul>
+        </div>
+      <!-- for role filter  -->
+        <div class="dropdown">
+          <button class="btn btn-dark" type="button" data-toggle="dropdown">Role
+            <span class="caret"></span></button>
+          <ul class="dropdown-menu">
+            <li><a href="#">ADMIN</a></li>
+            <li><a href="#">MEMBER</a></li>
+            <li><a href="#">GUEST</a></li>
+          </ul>
+        </div>
+
     </div>
+
+
+
   </div>
   <!-- delete modal -->
   <div class="modal fade" id="myModal" role="dialog">
@@ -51,8 +79,10 @@
           </h6>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal" data-toggle="modal" id="Cancel" >Cancel</button>
-          <button type="button" class="btn btn-danger" data-dismiss="modal" data-toggle="modal" id="confirm-delete" >Delete</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" data-toggle="modal"
+            id="Cancel">Cancel</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal" data-toggle="modal"
+            id="confirm-delete">Delete</button>
         </div>
       </div>
 
