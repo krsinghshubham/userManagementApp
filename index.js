@@ -45,22 +45,21 @@ const displayUsers = (users) => {
           <li class="user">
             <div id=${user.id}>
               <img class="avatar" src="${user.avatar}" alt="Avatar" >
-              <h5>${user.name}</h5>
+              <h5 id='user-name'>${user.name}</h5>
               <h5>${user.email}</h5>
               <h5>${user.address}</h5>
               <h5>${user.phone}</h5>
               <h5>${user.role}</h5>
-      
-              <button data-id="${user.id}" id="edit-${user.id}" data-action="edit" class="btn  btn-small btn-dark">Edit</button>
-              <button data-id="${user.id}" id="delete-${user.id}" data-action="delete" type="button" class="btn  btn-small btn-danger" >Delete</button>
-
+              <div id="modify-buttons">
+                <button data-id="${user.id}" id="edit-${user.id}" data-action="edit" class="btn  btn-small btn-secondary active btn-block">Edit</button>
+                <button data-id="${user.id}" id="delete-${user.id}" data-action="delete" type="button" class="btn  btn-small active btn-danger btn-block" >Delete</button>
+              </div>
             </div>
             <div id=edit-user-${user.id}>
             </div>
           </li>`
     })
     .join('');
-  // <button data-id="${user.id}" id="delete-${user.id}" data-action="delete" type="button" class="btn  btn-small btn-danger" data-toggle="modal" data-target="#myModal">Delete</button>
 
   userContainer.innerHTML = htmlString;
 
