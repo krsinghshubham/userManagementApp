@@ -1,20 +1,25 @@
+const userUrl = `http://localhost:3000/users`
 const userContainer = document.querySelector('#user-container')
 const searchBar = document.getElementById('searchBar');
-let typedCharacters = [];
-
-const userUrl = `http://localhost:3000/users`
-
-// fetch(`${userUrl}`, {
-
-// })
-
 const userForm = document.querySelector('#user-form')
-let allUsers = []
+
+var allUsers = []
+const loadUsers = async () => {   // using const instead of function to create function because It makes the function immutable, so you don't have to worry about that function being changed by some other piece of code.
+  const res = await fetch(`${userUrl}`);
+  allUsers = await res.json();
+  displayUsers(allUsers);
+};
+// displayx = (users) => {
+//   users.map((user) => { return user.email })
+// }
+// console.log(allUsers)
+
+
 
 searchBar.addEventListener('keyup', (e) => {
   const searchString = e.target.value.toLowerCase();
 
-  const filteredCharacters = typedCharacters.filter((character) => {
+  const filteredCharacters = allUsers.filter((character) => {
     return (
       character.name.toLowerCase().includes(searchString) ||
       character.email.toLowerCase().includes(searchString) ||
@@ -24,16 +29,10 @@ searchBar.addEventListener('keyup', (e) => {
   displayUsers(filteredCharacters)
 })
 
-const loadCharacters = async () => {
-  try {
-    const res = await fetch(`${userUrl}`);
-    typedCharacters = await res.json();
-    displayUsers(typedCharacters);
-    allUsers = typedCharacters
-  } catch (err) {
-    console.error(err);
-  }
-};
+// [const | let | var] = function () {} (or () => 
+// Is the creation of an anonymous function (function () {}) and the creation of a variable, and then the assignment of that anonymous function to that variable.
+
+// So the usual rules around variable hoisting within a scope -- block-scoped variables (let and const) do not hoist as undefined to the top of their block scope.
 
 const displayUsers = (users) => {
   const htmlString = users
@@ -55,34 +54,45 @@ const displayUsers = (users) => {
             <div id=edit-user-${user.id}>
             </div>
           </li>`
-    })
+    }
+    )
     .join('');
-
   userContainer.innerHTML = htmlString;
 
-  var div_list = document.querySelectorAll('.avatar') // querySelectorAll returns a Nodelist object which is similar to an array but NOT an array
-  var div_array = [...div_list];
+  // console.log(allUsers)
 
+
+  // ----------------------------------------------------Show user status in form of colors as green for active and default for inActive---------------------------------------------------------------
+  var div_list = document.querySelectorAll('.avatar') // querySelectorAll returns a Nodelist object which is similar to an array but NOT an array
+
+  var div_array = [...div_list];
   div_array.forEach((div, index) => {
-    // console.log(index)
     if (users[index].is_active === true) {
       div.style.border = '10px solid rgb(108, 166, 111)';
     }
     else {
       div.style.border = '10px solid #581d38';
-
     }
   });
 
-
 }
-
-
-loadCharacters();
+loadUsers();
 // -------------------------------------------------------------------------------------------------
 
-// Adding user, Create(C) operation.
 
+
+
+
+
+
+
+
+
+
+
+
+
+// Adding user, Create(C) operation.
 userForm.addEventListener('submit', (e) => {
 
   e.preventDefault(); // to make list get refreshed automatically after addition with new user.
@@ -165,8 +175,6 @@ userContainer.addEventListener('click', (e) => {
       const roleInput = document.querySelector("#edit-role").value
       const avatarInput = document.querySelector("#edit-avatar").value
 
-      const editedUser = document.querySelector(`#edit-user-${userData.id}`)
-
       fetch(`${userUrl}/${userData.id}`, {
         method: 'PATCH',
         body: JSON.stringify({
@@ -182,27 +190,11 @@ userContainer.addEventListener('click', (e) => {
           'Content-Type': 'application/json'
         }
       }).then(response => response.json())
-        .then(user => {
-          editedUser.innerHTML = `
-          <div id=${user.id}>
-            <img src="${user.avatar}" width="333" height="500" >
-            <h2>${user.is_active}</h2>
-            <h2>${user.name}</h2>
-            <h2>${user.email}</h2>
-            <p>>${user.address}</p>
-            <h2>${user.phone}</h2>
-            <h2>${user.role}</h2>
-            <button data-id="${user.id}" id="edit-${user.id}" data-action="edit"> Edit</button>
-            <button data-id="${user.id}" id="delete-${user.id}" data-action="delete"> Delete</button>
-          </div>
-          <div id=edit-user-${user.id}>
-          </div>`
-          editForm.innerHTML = ""
-          window.location.reload(); // refresh the page after the edit is made.
-        })
+        window.location.reload(); // refresh the page after the edit is made.
+
     }) // end of this event listener for edit submit
-    // -------------------------------------------------------------------------------------
-    
+    // -------------------------------------------------------------------------------------------------------------------------------
+
     // Deleting user, Delete() operation
   } else if (e.target.dataset.action === 'delete') {
 
@@ -227,8 +219,6 @@ userContainer.addEventListener('click', (e) => {
   }
 })  // end of eventListener for editing and deleting a User
 
-// -------------------------------------------------------------------------------------
-
 function deleteUser(targetDatasetId) {
 
   document.querySelector(`#user-${targetDatasetId}`)
@@ -238,6 +228,7 @@ function deleteUser(targetDatasetId) {
       'Content-Type': 'application/json'
     }
   }).then(response => response.json())
-  console.log(response.json())
-
 }
+
+// ----------------------------------------------------------------------------------------------------------------------------------------
+
