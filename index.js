@@ -1,6 +1,3 @@
-// document.addEventListener('DOMContentLoaded', function () {
-//  document.getElementById("user-container").disabled = true;
-
 const userContainer = document.querySelector('#user-container')
 const searchBar = document.getElementById('searchBar');
 let typedCharacters = [];
@@ -241,5 +238,6 @@ function deleteUser(targetDatasetId) {
       'Content-Type': 'application/json'
     }
   }).then(response => response.json())
+  console.log(response.json())
 
 }

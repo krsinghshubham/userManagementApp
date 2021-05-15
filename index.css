@@ -5,18 +5,19 @@ body {
 
 }
 
-* {
+/* * {
     box-sizing: border-box;
-}
+} */
 h1 {
     color: #eee;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
     
 }
 .container {
-    padding: 40px;
-    margin:  auto;
-    max-width: 1000px;
+    /* padding: 5px; */
+    /* height: auto; */
+    /* margin:  auto; */
+    /* max-width: auto; */
     text-align: center;
 }
 
@@ -29,6 +30,7 @@ h1 {
     /* height: 300px;  */
     margin: auto;
     /* background: #E6E2DC; */
+    padding: 0px 20px 20px 20px;
   }
   
   #flexbox > div {
