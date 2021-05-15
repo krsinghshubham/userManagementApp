@@ -45,6 +45,12 @@ h1 {
     /* padding: 10px; */
     /* color: #fff; */
   }
+  ul.dropdown-menu {
+    background-color: rgb(255, 255, 255);
+    color: black ;
+    cursor: pointer;
+    
+}
  
 #user-form{
     max-width: 200%;
@@ -127,4 +133,3 @@ img {
     padding: 5px 1%;
     font-size: 12px;
 }
-

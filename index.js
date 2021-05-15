@@ -9,25 +9,80 @@ const loadUsers = async () => {   // using const instead of function to create f
   allUsers = await res.json();
   displayUsers(allUsers);
 };
-// displayx = (users) => {
-//   users.map((user) => { return user.email })
-// }
-// console.log(allUsers)
-
-
 
 searchBar.addEventListener('keyup', (e) => {
   const searchString = e.target.value.toLowerCase();
 
-  const filteredCharacters = allUsers.filter((character) => {
+  const filteredUsers = allUsers.filter((user) => {
     return (
-      character.name.toLowerCase().includes(searchString) ||
-      character.email.toLowerCase().includes(searchString) ||
-      character.phone.toLowerCase().includes(searchString)
+      // user.is_active==false
+      user.name.toLowerCase().includes(searchString) ||
+      user.email.toLowerCase().includes(searchString) ||
+      user.phone.toLowerCase().includes(searchString)
     );
   })
-  displayUsers(filteredCharacters)
+  displayUsers(filteredUsers)
 })
+
+
+
+// TODO: Push the selected label of filters to top to show which option is selected, Refer below function
+
+// $(function(){
+//   $("#dropdown-menu-role li a").click(function(){ 
+//     $(".btn:first-child").text($(this).text());
+//   });
+// });
+
+function statusFilter(filter) {
+ 
+  if (filter == "any") {
+    displayUsers(allUsers)
+  }
+  if (filter == "active") {
+    const filteredUsers = allUsers.filter((user) => {
+      return (
+        user.is_active == true
+      );
+    })
+    displayUsers(filteredUsers)
+  }
+  if (filter == "inActive") {
+    const filteredUsers = allUsers.filter((user) => {
+      return (
+        user.is_active == false
+      );
+    })
+    displayUsers(filteredUsers)
+
+  }
+  if (filter == "admin") {
+    const filteredUsers = allUsers.filter((user) => {
+      return (
+        user.role == "ADMIN"
+      );
+    })
+    displayUsers(filteredUsers)
+  }
+  if (filter == "member") {
+    const filteredUsers = allUsers.filter((user) => {
+      return (
+        user.role == "MEMBER"
+      );
+    })
+    displayUsers(filteredUsers)
+
+  }
+  if (filter == "guest") {
+    const filteredUsers = allUsers.filter((user) => {
+      return (
+        user.role == "GUEST"
+      );
+    })
+    displayUsers(filteredUsers)
+
+  }
+}
 
 // [const | let | var] = function () {} (or () => 
 // Is the creation of an anonymous function (function () {}) and the creation of a variable, and then the assignment of that anonymous function to that variable.
@@ -190,7 +245,7 @@ userContainer.addEventListener('click', (e) => {
           'Content-Type': 'application/json'
         }
       }).then(response => response.json())
-        window.location.reload(); // refresh the page after the edit is made.
+      window.location.reload(); // refresh the page after the edit is made.
 
     }) // end of this event listener for edit submit
     // -------------------------------------------------------------------------------------------------------------------------------
