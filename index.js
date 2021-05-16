@@ -9,7 +9,7 @@ const loadUsers = async () => {   // using const instead of function to create f
   allUsers = await res.json();
   displayUsers(allUsers);
 };
-
+//--------------------------------Search and Display----------------------------------------
 searchBar.addEventListener('keyup', (e) => {
   const searchString = e.target.value.toLowerCase();
 
@@ -33,7 +33,6 @@ searchBar.addEventListener('keyup', (e) => {
 // });
 
 function statusFilter(filter) {
-
   if (filter == "any") {
     displayUsers(allUsers)
   }
@@ -84,7 +83,6 @@ function statusFilter(filter) {
 
 // [const | let | var] = function () {} (or () => 
 // Is the creation of an anonymous function (function () {}) and the creation of a variable, and then the assignment of that anonymous function to that variable.
-
 // So the usual rules around variable hoisting within a scope -- block-scoped variables (let and const) do not hoist as undefined to the top of their block scope.
 
 const displayUsers = (users) => {
@@ -111,10 +109,6 @@ const displayUsers = (users) => {
     )
     .join('');
   userContainer.innerHTML = htmlString;
-
-  // console.log(allUsers)
-
-
   // ----------------------------------------------------Show user status in form of colors as green for active and default for inActive---------------------------------------------------------------
   var div_list = document.querySelectorAll('.avatar') // querySelectorAll returns a Nodelist object which is similar to an array but NOT an array
 
@@ -130,148 +124,51 @@ const displayUsers = (users) => {
 
 }
 loadUsers();
-// -------------------------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// --------------------------------------------------------------------------------------------------------------------------------
 // Adding user, Create(C) operation.
-userForm.addEventListener('submit', (e) => {
+document.getElementById("addUser").addEventListener("click", ()=>{
+  $('#newUserModal').modal('show')
 
-  e.preventDefault(); // to make list get refreshed automatically after addition with new user.
-  // console.log(e.target)
-  const nameInput = userForm.querySelector('#name').value
-  const emailInput = userForm.querySelector('#email').value
-  const phoneInput = userForm.querySelector('#phone').value
-  const addressInput = userForm.querySelector('#address').value
-  const is_activeInput = userForm.querySelector('#is_active').value
-  const roleInput = userForm.querySelector('#role').value
-  const avatarInput = userForm.querySelector('#avatar').value
-  fetch(`${userUrl}`, {
-    method: 'POST',
-    body: JSON.stringify({
-      name: nameInput,
-      email: emailInput,
-      phone: phoneInput,
-      address: addressInput,
-      is_active: is_activeInput,
-      role: roleInput,
-      avatar: avatarInput
-    }),
-    headers: { // this is necessary to make the fetch api work. (https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch#Headers)
-      'Content-Type': 'application/json'
-    }
-  }).then(response => response.json())
-    .then(user => {
-      userContainer.innerHTML += `
-        <div id=${user.id}>
-          <img src="${user.avatar}" width="333" height="500" >
-          <h2>${user.is_active}</h2>
-          <h2>${user.name}</h2>
-          <h2>${user.email}</h2>
-          <p>>${user.address}</p>
-          <h2>${user.phone}</h2>
-          <h2>${user.role}</h2>
-          <button data-id="${user.id}" id="edit-${user.id}" data-action="edit"> Edit</button>
-          <button data-id="${user.id}" id="delete-${user.id}" data-action="delete"> Delete</button>
-        </div>
-        <div id=edit-user-${user.id}>
-        </div>`
-    })
-}) // end of addEventListener // end of addEventListener for adding a user
+});
+
+// this is necessary to make the fetch api work. (https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch#Headers)
+ // end of addEventListener
 // -------------------------------------------------------------------------------------
 
-// Editing user, Update(U) operation.
+// Additing, Editing user, Updating(U) operation.
 userContainer.addEventListener('click', (e) => {
   if (e.target.dataset.action === 'edit') {
-
-    const editButton = document.querySelector(`#edit-${e.target.dataset.id}`)
-    editButton.disabled = true
-
     const userData = allUsers.find((user) => {
       return user.id == e.target.dataset.id
     })
-    const editForm = userContainer.querySelector(`#edit-user-${e.target.dataset.id}`)
-    editForm.innerHTML = `
-        <form class='form' id='edit-user' action ='index.html' method='post'>
-          <form id ="user-form">
-              <input id="edit-name" placeholder="${userData.name}">
-              <input id="edit-email" placeholder="${userData.email}">
-              <input id="edit-phone" placeholder="${userData.phone}">
-              <input id="edit-address" placeholder="${userData.address}">
-              <input id="edit-is_active" placeholder="${userData.is_active}">
-              <input id="edit-role" placeholder="${userData.role}">
-              <input id="edit-avatar" placeholder="${userData.avatar}">
-              <input type="submit" value="Edit User">
-          </form>
-        </form>`
+    var form = document.getElementById("editForms");
+    form["Id"].value = userData.id;
+    form["editName"].value = userData.name;
+    form["editEmail"].value = userData["email"];
+    form["editAddress"].value = userData["address"];
+    form["editPhone"].value = userData["phone"];
+    form["editRole"].value = userData["role"];
+    form["editStatus"].value = userData["is_active"]
+    $('#editModal').modal('show')
 
-    editForm.addEventListener("submit", (e) => {
-      e.preventDefault()
-
-      // const nameInput = document.querySelector("#edit-name").value
-      const nameInput = userData.name
-      const emailInput = editForm.querySelector("#edit-email").value
-      const phoneInput = document.querySelector("#edit-phone").value
-
-      const addressInput = document.querySelector("#edit-address").value
-      const is_activeInput = document.querySelector("#edit-is_active").value
-      const roleInput = document.querySelector("#edit-role").value
-      const avatarInput = document.querySelector("#edit-avatar").value
-
-      fetch(`${userUrl}/${userData.id}`, {
-        method: 'PATCH',
-        body: JSON.stringify({
-          name: nameInput,
-          email: emailInput,
-          phone: phoneInput,
-          address: addressInput,
-          is_active: is_activeInput,
-          role: roleInput,
-          avatar: avatarInput
-        }),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }).then(response => response.json())
-      window.location.reload(); // refresh the page after the edit is made.
-
-    }) // end of this event listener for edit submit
+    // end of this event listener for edit 
     // -------------------------------------------------------------------------------------------------------------------------------
-
     // Deleting user, Delete() operation
   } else if (e.target.dataset.action === 'delete') {
-
-    // $('#myModal').on('show.bs.modal');
-    $('#myModal').modal('show')
-    $('#myModal .modal-footer button').on('click', function (event) {
+    $('#deleteModal').modal('show')
+    $('#deleteModal .modal-footer button').on('click', function (event) {
       var $button = $(event.target);
-
       $(this).closest('.modal').one('hidden.bs.modal', function () {
-        console.log('now inside this function')
         if ($button[0].id == "confirm-delete") {
-          console.log('delete button pressed')
           deleteUser(e.target.dataset.id)
         }
         else {
           console.log('cancel button pressed')
         }
-        //  alert('The buttons id that closed the modal is: ' + $button[0].id) ;
       });
     });
-
   }
-})  // end of eventListener for editing and deleting a User
+})  // end of eventListener delete
 
 function deleteUser(targetDatasetId) {
 
@@ -284,5 +181,45 @@ function deleteUser(targetDatasetId) {
   }).then(response => response.json())
 }
 
+function editUser(formData) {
+  let status= true
+  // console.log(typeof status)
+  if(formData["editStatus"].value==="false"){
+    status=false
+  }
+
+  fetch(`${userUrl}/${formData["Id"].value}`, {
+    method: 'PATCH',
+    body: JSON.stringify({
+      name: formData["editName"].value,
+      email: formData["editEmail"].value,
+      phone: formData["editPhone"].value,
+      address: formData["editAddress"].value,
+      is_active: status,
+      role: formData["editRole"].value,
+    }),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }).then(response => response.json())
+    .then(window.location.reload()); // refresh the page after the edit is made.
+}
+function addNewUser(formData) {
+  fetch(`${userUrl}`, {
+    method: 'POST',
+    body: JSON.stringify({
+      name: formData["addName"].value,
+      email: formData["addEmail"].value,
+      phone: formData["addPhone"].value,
+      address: formData["addAddress"].value,
+      is_active: formData["addStatus"].value,
+      role: formData["addRole"].value,
+    }),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }).then(response => response.json())
+    .then(window.location.reload()); // refresh the page after the add is made.
+}
 // ----------------------------------------------------------------------------------------------------------------------------------------
 

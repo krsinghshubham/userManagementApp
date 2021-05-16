@@ -13,6 +13,14 @@ h1 {
     margin-bottom: 10px;
     
 }
+.btn-circle {
+    width: 70px;
+    height: 50px;
+    padding: 7px 10px;
+    border-radius: 25px;
+    font-size: 10px;
+    text-align: center;
+}
 .container {
     /* padding: 5px; */
     /* height: auto; */
@@ -133,7 +141,7 @@ img {
     padding: 5px 1%;
     font-size: 12px;
 }
-.modal-dialog {
+.newUsermodal-dialog{
     position: absolute;
     top: 50px;
     right: 100px;
@@ -142,4 +150,28 @@ img {
     z-index: 10040;
     overflow: auto;
     overflow-y: auto;
+    text-align: center;
+    width: 450px;
+    margin: auto;
+
+}
+ .modal-dialog {
+    position: absolute;
+    top: 170px;
+    right: 100px;
+    bottom: 0;
+    left: 0;
+    z-index: 10040;
+    overflow: auto;
+    overflow-y: auto;
+    text-align: center;
  }
+ #editRole{
+    color: black;
+    font-weight: lighter;
+ }
+ #editStatus {
+    color: black;
+    font-weight: lighter;
+ }
+  

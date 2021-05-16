@@ -17,27 +17,66 @@
 <body>
   <div class="container">
     <h1>&#x2728; Users &#x2728;</h1>
-
-    <!-- user addition form -->
-    <div id='create-user'>
-      <form id="user-form">
-        <input id="name" placeholder="name...">
-        <input id="email" placeholder="email...">
-        <input id="phone" placeholder="phone..">
-        <input id="address" placeholder="address..">
-        <input id="is_active" placeholder="isActive?...">
-        <input id="role" placeholder="role...">
-        <input id="avatar" placeholder="avatar address">
-        <input type="submit" value="Add User">
-      </form>
-    </div>
+    
 
     <div id="shortcuts">
       <input type="text" id="searchBar" name="searchBar" placeholder="search by name, email or phone"
         class="form-control form-control-ig" />
       <!-- </div>
 
-    <!-- Filters -->
+<!-- new user modal -->
+      <div class="modal fade" id="newUserModal" class="modal">
+        <div class="newUsermodal-dialog modal-small">
+
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div>
+              <div class="modal-header">
+                <h2 style="font-weight: bold" "modal-title">User Sign up!</h2>
+              </div>
+
+              <div class="modal-body">
+                <form name="newUserForm" id="newUserForm">
+                  <label>Name</label>
+                  <input class="form-control" name=addName" id="addName" type="text" required />
+                  <label>Email</label>
+                  <input class="form-control" name="addEmail" id="addEmail" type="email" required />
+                  <label>Address</label>
+                  <input class="form-control" name="addAddress" id="addAddress" type="text" required />
+                  <label>Phone</label>
+                  <input class="form-control" name="addphone" id="addPhone" type="text" required />
+                  <label>Status</label>
+                  <select class="btn" name="addStatus" id="addStatus">
+                    <option value=true>Active</option>
+                    <option value=false>Inactive</option>
+                  </select>
+                  <br>
+                  <label>Role</label>
+                  <select class="btn" name="addrole" id="addRole">
+                    <option value="ADMIN">Admin</option>
+                    <option value="MEMBER">Member</option>
+                    <option value="GUEST">Guest</option>
+                  </select>
+                  <br>
+                  <label>Avatar &nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <a href=https://randomuser.me/photos
+                      target="_blank" {font-size: 1004px}>choose</a></label>
+                  <input class="form-control" name="addAvatar" id="addAvatar" type="text" required />
+
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-default" data-toggle="modal" data-dismiss="modal" 
+                      id="Cancel">Cancel</button>
+                    <button type="submit" class="btn btn-dark" data-toggle="modal" id="addSubmit"
+                      onclick="addNewUser(document.getElementById('newUserForm'))">Submit</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button type="button" class="btn btn-default  " data-action="addUser" id="addUser">Add User</button>
+      <!-- Filters -->
       <!-- for Status filter  -->
       <div class="dropdown">
 
@@ -69,23 +108,68 @@
       </div>
 
     </div>
-
-
-
   </div>
+
+  <!-- Edit modal -->
+  <div class="modal fade" id="editModal" class="modal">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div>
+          <div class="modal-header">
+            <h2 style="font-weight: bold" "modal-title">Edit User</h2>
+          </div>
+
+          <div class="modal-body">
+            <form name="editForms" id="editForms">
+              <label>Name</label>
+              <input class="form-control" name="editName" id="editName" type="text" />
+              <label>Email</label>
+              <input class="form-control" name="editEmail" id="editEmail" type="email" />
+              <label>Address</label>
+              <input class="form-control" name="editAddress" id="editAddress" type="text" />
+              <label>Phone</label>
+              <input class="form-control" name="editphone" id="editPhone" type="text" />
+
+              <label>Status</label>
+              <select class="btn" name="editStatus" id="editStatus">
+                <option value=true>Active</option>
+                <option value=false>Inactive</option>
+              </select>
+              <br>
+              <label>Role</label>
+              <select class="btn" name="editRole" id="editRole">
+                <option value="ADMIN">Admin</option>
+                <option value="MEMBER">Member</option>
+                <option value="GUEST">Guest</option>
+              </select>
+              <input name="Id" id="Id" type="hidden" />
+            </form>
+
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" data-toggle="modal"
+              id="Cancel">Cancel</button>
+            <button class="btn btn-dark" type="button" id="editSubmit"
+              onclick="editUser(document.getElementById('editForms'))">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- delete modal -->
-  <div class="modal fade" id="myModal" role="dialog">
+  <div class="modal fade" id="deleteModal" role="dialog">
     <div class="modal-dialog">
 
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title">Delete User</h4>
+          <h5 class="modal-title">Are you sure to delete this user ?</h5>
         </div>
-        <div class="modal-body">
-          <h6> are you sure to delete ... <span id="deleteUserName"></span> <span id="deleteUserId"></span>
-          </h6>
-        </div>
+
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal" data-toggle="modal"
             id="Cancel">Cancel</button>
