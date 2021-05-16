@@ -24,9 +24,7 @@ searchBar.addEventListener('keyup', (e) => {
   displayUsers(filteredUsers)
 })
 
-
-
-// TODO: Push the selected label of filters to top to show which option is selected, Refer below function
+// TODO: Push the selected label of filters to top to show which option is selected, Refer commented function below
 
 // $(function(){
 //   $("#dropdown-menu-role li a").click(function(){ 
@@ -35,7 +33,7 @@ searchBar.addEventListener('keyup', (e) => {
 // });
 
 function statusFilter(filter) {
- 
+
   if (filter == "any") {
     displayUsers(allUsers)
   }
@@ -221,7 +219,8 @@ userContainer.addEventListener('click', (e) => {
     editForm.addEventListener("submit", (e) => {
       e.preventDefault()
 
-      const nameInput = document.querySelector("#edit-name").value
+      // const nameInput = document.querySelector("#edit-name").value
+      const nameInput = userData.name
       const emailInput = editForm.querySelector("#edit-email").value
       const phoneInput = document.querySelector("#edit-phone").value
 

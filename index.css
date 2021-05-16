@@ -133,3 +133,13 @@ img {
     padding: 5px 1%;
     font-size: 12px;
 }
+.modal-dialog {
+    position: absolute;
+    top: 50px;
+    right: 100px;
+    bottom: 0;
+    left: 0;
+    z-index: 10040;
+    overflow: auto;
+    overflow-y: auto;
+ }
