@@ -9,7 +9,7 @@ const loadUsers = async () => {   // using const instead of function to create f
   allUsers = await res.json();
   displayUsers(allUsers);
 };
-//--------------------------------Search and Display----------------------------------------
+//--------------------------------Search and Display------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 searchBar.addEventListener('keyup', (e) => {
   const searchString = e.target.value.toLowerCase();
 
@@ -80,7 +80,6 @@ function statusFilter(filter) {
 
   }
 }
-
 // [const | let | var] = function () {} (or () => 
 // Is the creation of an anonymous function (function () {}) and the creation of a variable, and then the assignment of that anonymous function to that variable.
 // So the usual rules around variable hoisting within a scope -- block-scoped variables (let and const) do not hoist as undefined to the top of their block scope.
@@ -109,7 +108,7 @@ const displayUsers = (users) => {
     )
     .join('');
   userContainer.innerHTML = htmlString;
-  // ----------------------------------------------------Show user status in form of colors as green for active and default for inActive---------------------------------------------------------------
+  // ----------------------------------------------------Show user status in form of colors as green for active and default for inActive---------------------------------------------------------------------------------------
   var div_list = document.querySelectorAll('.avatar') // querySelectorAll returns a Nodelist object which is similar to an array but NOT an array
 
   var div_array = [...div_list];
@@ -124,18 +123,14 @@ const displayUsers = (users) => {
 
 }
 loadUsers();
-// --------------------------------------------------------------------------------------------------------------------------------
-// Adding user, Create(C) operation.
+// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Adding user, Create(C) operation...
 document.getElementById("addUser").addEventListener("click", ()=>{
   $('#newUserModal').modal('show')
-
 });
+// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-// this is necessary to make the fetch api work. (https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch#Headers)
- // end of addEventListener
-// -------------------------------------------------------------------------------------
-
-// Additing, Editing user, Updating(U) operation.
+// Editing user/UpdateU) and Deleting User Delete(D) operation....
 userContainer.addEventListener('click', (e) => {
   if (e.target.dataset.action === 'edit') {
     const userData = allUsers.find((user) => {
@@ -152,7 +147,7 @@ userContainer.addEventListener('click', (e) => {
     $('#editModal').modal('show')
 
     // end of this event listener for edit 
-    // -------------------------------------------------------------------------------------------------------------------------------
+    // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     // Deleting user, Delete() operation
   } else if (e.target.dataset.action === 'delete') {
     $('#deleteModal').modal('show')
@@ -169,9 +164,10 @@ userContainer.addEventListener('click', (e) => {
     });
   }
 })  // end of eventListener delete
+//Crud completed
+// Functions----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 function deleteUser(targetDatasetId) {
-
   document.querySelector(`#user-${targetDatasetId}`)
   fetch(`${userUrl}/${targetDatasetId}`, {
     method: 'DELETE',
@@ -179,7 +175,9 @@ function deleteUser(targetDatasetId) {
       'Content-Type': 'application/json'
     }
   }).then(response => response.json())
+  .then(window.location.reload());
 }
+
 
 function editUser(formData) {
   let status= true
@@ -187,7 +185,6 @@ function editUser(formData) {
   if(formData["editStatus"].value==="false"){
     status=false
   }
-
   fetch(`${userUrl}/${formData["Id"].value}`, {
     method: 'PATCH',
     body: JSON.stringify({
@@ -204,6 +201,8 @@ function editUser(formData) {
   }).then(response => response.json())
     .then(window.location.reload()); // refresh the page after the edit is made.
 }
+
+
 function addNewUser(formData) {
   fetch(`${userUrl}`, {
     method: 'POST',
@@ -213,7 +212,7 @@ function addNewUser(formData) {
       phone: formData["addPhone"].value,
       address: formData["addAddress"].value,
       is_active: formData["addStatus"].value,
-      role: formData["addRole"].value,
+      role: formData["addRole"].value
     }),
     headers: {
       'Content-Type': 'application/json'
@@ -221,5 +220,5 @@ function addNewUser(formData) {
   }).then(response => response.json())
     .then(window.location.reload()); // refresh the page after the add is made.
 }
-// ----------------------------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
