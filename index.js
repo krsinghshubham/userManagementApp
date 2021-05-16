@@ -94,7 +94,7 @@ const displayUsers = (users) => {
               <img class="avatar" src="${user.avatar}" alt="Avatar" >
               <h5 id='user-name'>${user.name}</h5>
               <h5>${user.email}</h5>
-              <h5>${user.address}</h5>
+              <h5 class="user-address">${user.address}</h5>
               <h5>${user.phone}</h5>
               <h5>${user.role}</h5>
               <div id="modify-buttons">
