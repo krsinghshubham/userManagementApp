@@ -1,6 +1,6 @@
 # userManagementApp
 
-
+I made this project as part of an assignment for my employer. My first ever working project. :)
 
 https://user-images.githubusercontent.com/47324260/119192443-cd2f6800-ba9d-11eb-8210-f3edf0f1170d.mp4
 
